@@ -1,103 +1,103 @@
-# 基于 Spring Cloud 的微服务架构
+# Baseado em Spring Cloud Arquitetura de microsserviço
 
-本项目是一个基于 Spring Boot、Spring Cloud、Spring Oauth2 和 Spring Cloud Netflix 等框架构建的微服务项目。
+Este projeto é baseado em Spring Boot、Spring Cloud、Spring Oauth2 e Spring Cloud Netflix, projetos de microsserviços construídos por frameworks.
 
-# 技术栈
-* Spring boot - 微服务的入门级微框架，用来简化 Spring 应用的初始搭建以及开发过程。
-* Eureka - 云端服务发现，一个基于 REST 的服务，用于定位服务，以实现云端中间层服务发现和故障转移。
-* Spring Cloud Config - 配置管理工具包，让你可以把配置放到远程服务器，集中化管理集群配置，目前支持本地存储、Git 以及 Subversion。
-* Hystrix - 熔断器，容错管理工具，旨在通过熔断机制控制服务和第三方库的节点,从而对延迟和故障提供更强大的容错能力。
-* Zuul - Zuul 是在云平台上提供动态路由，监控，弹性，安全等边缘服务的框架。Zuul 相当于是设备和 Netflix 流应用的 Web 网站后端所有请求的前门。
-* Spring Cloud Bus - 事件、消息总线，用于在集群（例如，配置变化事件）中传播状态变化，可与 Spring Cloud Config 联合实现热部署。
-* Spring Cloud Sleuth - 日志收集工具包，封装了 Dapper 和 log-based 追踪以及 Zipkin 和 HTrace 操作，为 SpringCloud 应用实现了一种分布式追踪解决方案。
-* Ribbon - 提供云端负载均衡，有多种负载均衡策略可供选择，可配合服务发现和断路器使用。
-* Turbine - Turbine 是聚合服务器发送事件流数据的一个工具，用来监控集群下 hystrix 的 metrics 情况。
-* Spring Cloud Stream - Spring 数据流操作开发包，封装了与 Redis、Rabbit、Kafka 等发送接收消息。
-* Feign - Feign 是一种声明式、模板化的 HTTP 客户端。
-* Spring Cloud OAuth2 - 基于 Spring Security 和 OAuth2 的安全工具包，为你的应用程序添加安全控制。
+# Tecnologias
+* Spring boot - Microframe de nível de entrada de microsserviços para simplificar a configuração inicial do aplicativo e o processo de desenvolvimento.
+* Eureka - Descoberta de serviço em nuvem, uma baseada em REST serviços de localização para habilitar o failover e descoberta de serviços de camada intermediária na nuvem.
+* Spring Cloud Config - O kit de ferramentas de gerenciamento de configuração permite que você coloque a configuração em um servidor remoto, gerencie centralmente a configuração do cluster e, atualmente, ofereça suporte ao armazenamento local, Git e Subversion。
+* Hystrix - ferramenta de gerenciamento tolerante a falhas, projetada para controlar os nós da biblioteca e-third-party de serviço,Isso fornece uma tolerância a falhas mais robusta para atrasar falhas e.
+* Zuul - Zuul é uma estrutura para fornecer serviços como roteamento dinâmico, monitoramento, resiliência e segurança na plataforma de nuvem.
+* Spring Cloud Bus - Evento, barramento de mensagens, usado para propagar mudanças de estado em um cluster (por exemplo, eventos de alteração de configuração), Spring Cloud Config 联合实现热部署。
+* Spring Cloud Sleuth - Kit de coleta de log Dapper e log-based 追踪以及 Zipkin e HTrace, SpringCloud O aplicativo implementa uma solução de rastreamento distribuída.
+* Ribbon - Fornecer balanceamento de carga em nuvem, uma variedade de estratégias de balanceamento de carga para escolher, pode ser usado em conjunto com disjuntores de descoberta de serviço e.
+* Turbine - Turbine É uma ferramenta para o servidor de agregação enviar dados do fluxo de eventos, usados ​​para monitorar o cluster hystrix de metrics
+* Spring Cloud Stream - Spring Pacote de desenvolvimento de operação de fluxo de dados, empacotado com Redis、Rabbit、Kafka
+* Feign - Feign É um modelo declarativo HTTP cliente
+* Spring Cloud OAuth2 - Baseado em Spring Security e OAuth2 Kit de ferramentas de segurança para adicionar controles de segurança ao seu aplicativo.
 
-# 应用架构
+# Arquitetura de aplicativos
 
-该项目包含 8 个服务
+O projeto contém 8 serviços
 
-* registry - 服务注册与发现
-* config - 外部配置
-* monitor - 监控
-* zipkin - 分布式跟踪
-* gateway - 代理所有微服务的接口网关
-* auth-service - OAuth2 认证服务
-* svca-service - 业务服务A
-* svcb-service - 业务服务B
+* registry - Registro de serviço e descoberta
+* config - Configuração externa
+* monitor - Monitoramento
+* zipkin - Rastreamento distribuído
+* gateway - Gateway proxy para todos os microserviços
+* auth-service - OAuth2 Serviço de autenticação
+* svca-service - Serviço comercial A
+* svcb-service - Serviço comercial B
 
-## 体系架构
+## Arquitetura
 ![architecture](/screenshots/architecture.jpg)
-## 应用组件
+## Componente de aplicação
 ![components](/screenshots/components.jpg)
 
-# 启动项目
+# Iniciar projeto
 
-* 使用 Docker 快速启动
-    1. 配置 Docker 环境
-    2. `mvn clean package` 打包项目及 Docker 镜像
-    3. 在项目根目录下执行 `docker-compose up -d` 启动所有项目
-* 本地手动启动
-    1. 配置 rabbitmq
-    2. 修改 hosts 将主机名指向到本地   
+* Use Docker 
+    1. Configuração de ambiente Docker
+    2. `mvn clean package` empacotar projeto e gerar imagem Docker
+    3. Executar no diretório raiz do projeto `docker-compose up -d` inicia todos os projetos
+* Executando localmente
+    1. Configuração do RabbitMQ
+    2. Alterar os host para apontar para localhost
        `127.0.0.1	registry config monitor rabbitmq auth-service`  
-       或者修改各服务配置文件中的相应主机名为本地 ip
-    3. 启动 registry、config、monitor、zipkin
-    4. 启动 gateway、auth-service、svca-service、svcb-service
+       Ou modifique o nome do host correspondente em cada arquivo de configuração de serviço para ser ip local
+    3. Inicie registry、config、monitor、zipkin
+    4. Inicie gateway、auth-service、svca-service、svcb-service
 
-# 项目预览
+# Pré-visualização do projeto
 
-## 注册中心
-访问 http://localhost:8761/ 默认账号 user，密码 password
+## Eureka
+Acesso: http://localhost:8761/ Conta padrão user, senha password
 
 ![registry](/screenshots/registry.jpg)
-## 监控
-访问 http://localhost:8040/ 默认账号 admin，密码 admin
-### 控制面板
+## Monitoramento
+访问 http://localhost:8040/ Conta padrão admin, senha admin
+### Painel de controle
 ![monitor](/screenshots/monitor1.jpg)
-### 应用注册历史
+### Histórico de registro de aplicativos
 ![monitor](/screenshots/monitor2.jpg)
-### Turbine Hystrix面板
+### Turbine Hystrix Painel
 ![monitor](/screenshots/monitor3.jpg)
-### 应用信息、健康状况、垃圾回收等详情
+### Informações sobre aplicativos, status de integridade, coleta de lixo, etc.
 ![monitor](/screenshots/monitor4.jpg)
-### 计数器
+### Contador
 ![monitor](/screenshots/monitor5.jpg)
-### 查看和修改环境变量
+### Ver e para modificar variáveis ​​de ambiente
 ![monitor](/screenshots/monitor6.jpg)
-### 管理 Logback 日志级别
+### Gestão de nível de log Logback
 ![monitor](/screenshots/monitor7.jpg)
-### 查看并使用 JMX
+### Visualizar e usar JMX
 ![monitor](/screenshots/monitor8.jpg)
-### 查看线程
+### Ver tópico
 ![monitor](/screenshots/monitor9.jpg)
-### 认证历史
+### Histórico de certificação
 ![monitor](/screenshots/monitor10.jpg)
-### 查看 Http 请求轨迹
+### Visualizar solicitações Http 
 ![monitor](/screenshots/monitor11.jpg)
-### Hystrix 面板
+### Hystrix painel
 ![monitor](/screenshots/monitor12.jpg)
-## 链路跟踪
-访问 http://localhost:9411/ 默认账号 admin，密码 admin
-### 控制面板
+## Acompanhamento de links
+Acesso http://localhost:9411/ Conta padrão admin, senha admin
+### Painel de controle
 ![zipkin](/screenshots/zipkin1.jpg)
-### 链路跟踪明细
+### Detalhes do acompanhamento de links
 ![zipkin](/screenshots/zipkin2.jpg)
-### 服务依赖关系
+### Dependência de serviço
 ![zipkin](/screenshots/zipkin3.jpg)
-## RabbitMQ 监控
-Docker 启动访问 http://localhost:15673/ 默认账号 guest，密码 guest（本地 rabbit 管理系统默认端口15672）
+## RabbitMQ Monitoramento
+Docker Iniciar acesso http://localhost:15673/ Conta padrão guest, senha guest（Porta padrão do sistema de gerenciamento rabbit 15672)
 
 ![rabbit](/screenshots/rabbit.jpg)
-# 接口测试
-1. 获取 Token
+# Teste de interface
+1. Obter Token
 ```
 curl -X POST -vu client:secret http://localhost:8060/uaa/oauth/token -H "Accept: application/json" -d "password=password&username=anil&grant_type=password&scope=read%20write"
 ```
-返回如下格式数据：
+Retorna os seguintes dados:
 ```
 {
   "access_token": "eac56504-c4f0-4706-b72e-3dc3acdf45e9",
@@ -107,28 +107,28 @@ curl -X POST -vu client:secret http://localhost:8060/uaa/oauth/token -H "Accept:
   "scope": "read write"
 }
 ```
-2. 使用 access token 访问 service a 接口
+2. Use access token para acessar service A
 ```
 curl -i -H "Authorization: Bearer eac56504-c4f0-4706-b72e-3dc3acdf45e9" http://localhost:8060/svca
 ```
-返回如下数据：
+Retorna os seguintes dados:
 ```
 svca-service (172.18.0.8:8080)===>name:zhangxd
 svcb-service (172.18.0.2:8070)===>Say Hello
 ```
-3. 使用 access token 访问 service b 接口
+3. Use access token para acessar service B
 ```
 curl -i -H "Authorization: Bearer eac56504-c4f0-4706-b72e-3dc3acdf45e9" http://localhost:8060/svcb
 ```
-返回如下数据：
+Retorna os seguintes dados:
 ```
 svcb-service (172.18.0.2:8070)===>Say Hello
 ```
-4. 使用 refresh token 刷新 token
+4. Use refresh token para atualizar token
 ```
 curl -X POST -vu client:secret http://localhost:8060/uaa/oauth/token -H "Accept: application/json" -d "grant_type=refresh_token&refresh_token=da1007dc-683c-4309-965d-370b15aa4aeb"
 ```
-返回更新后的 Token：
+Retorno da atualização do Token：
 ```
 {
   "access_token": "63ff57ce-f140-482e-ba7e-b6f29df35c88",
@@ -138,7 +138,7 @@ curl -X POST -vu client:secret http://localhost:8060/uaa/oauth/token -H "Accept:
   "scope": "read write"
 }
 ```
-5. 刷新配置
+5. Atualizar configuração
 ```
 curl -X POST -vu user:password http://localhost:8888/bus/refresh
 ```
